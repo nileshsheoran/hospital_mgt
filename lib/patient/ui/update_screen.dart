@@ -41,7 +41,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
       appBar: AppBar(
         title: const Text('Update Patient'),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -54,7 +54,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  hintText: ''
+                    labelText: 'Id'
                 ),
               ),
               const SizedBox(
@@ -67,7 +67,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  hintText: '',
+                  labelText: 'Name',
                 ),
               ),
               const SizedBox(
@@ -79,7 +79,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  hintText: '',
+                  labelText: 'Disease',
                 ),
               ),
               const SizedBox(
@@ -91,8 +91,11 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  hintText: '',
+                  labelText: 'Fees',
                 ),
+              ),
+              const SizedBox(
+                height: 16,
               ),
               TextField(
                 controller: doctorController,
@@ -100,8 +103,11 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  hintText: '',
+                  labelText: 'Doctor',
                 ),
+              ),
+              const SizedBox(
+                height: 16,
               ),
               TextField(
                 controller: addressController,
@@ -109,7 +115,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  hintText: '',
+                  labelText: 'Address',
                 ),
               ),
               const SizedBox(
