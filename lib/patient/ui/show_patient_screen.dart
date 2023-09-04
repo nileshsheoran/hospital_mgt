@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hospital_mgt/database/database_helper.dart';
 import 'package:hospital_mgt/patient/model/patient_model.dart';
@@ -84,7 +83,8 @@ class _ShowPatientScreenState extends State<ShowPatientScreen> {
                                 onPressed: () async {
                                   await Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return UpdateScreen(patient: patientModel);
+                                    return UpdatePatientScreen(
+                                        patient: patientModel);
                                   }));
                                   getPatientData();
                                 },
