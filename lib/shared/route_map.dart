@@ -1,10 +1,8 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:hospital_mgt/doctor/ui/add_doctor_screen.dart';
 import 'package:hospital_mgt/patient/ui/add_patient_screen.dart';
 import 'package:hospital_mgt/patient/ui/show_patient_screen.dart';
-import 'package:hospital_mgt/patient/ui/update_screen.dart';
 
 Map<String, WidgetBuilder> routeMap = {
   ScreenName.addDoctorScreen: (context) {
@@ -16,7 +14,6 @@ Map<String, WidgetBuilder> routeMap = {
   ScreenName.showPatientScreen: (context){
     return const ShowPatientScreen();
   },
-
 };
 
 class ScreenName {

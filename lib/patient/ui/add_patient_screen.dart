@@ -118,8 +118,8 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
-                  onPressed: ()async{
-                    Patient patient =Patient(
+                  onPressed: () async {
+                    Patient patient = Patient(
                       id: int.parse(idController.text),
                       name: nameController.text,
                       disease: diseaseController.text,
@@ -128,12 +128,15 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                       address: addressController.text,
                     );
                     await DatabaseHelper.addPatientData(patient);
-                    if(mounted) {
+                    if (mounted) {
                       Navigator.pop(context);
                     }
                     allClear();
                   },
-                  child: const Text(StringConst.buttonText,style: TextStyle(fontSize: 16),),
+                  child: const Text(
+                    StringConst.buttonText,
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
             ],
@@ -142,6 +145,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
       ),
     );
   }
+
   void allClear() {
     idController.clear();
     nameController.clear();
@@ -151,4 +155,3 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
     addressController.clear();
   }
 }
-
