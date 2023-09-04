@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:hospital_mgt/database/database_helper.dart';
 import 'package:hospital_mgt/patient/model/patient_model.dart';
 
-class UpdateScreen extends StatefulWidget {
-  const UpdateScreen({required this.patient, super.key});
+class UpdatePatientScreen extends StatefulWidget {
+  const UpdatePatientScreen({required this.patient, super.key});
 
   final Patient patient;
 
   @override
-  State<UpdateScreen> createState() => _UpdateScreenState();
+  State<UpdatePatientScreen> createState() => _UpdatePatientScreenState();
 }
 
-class _UpdateScreenState extends State<UpdateScreen> {
+class _UpdatePatientScreenState extends State<UpdatePatientScreen> {
   late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController diseaseController;
