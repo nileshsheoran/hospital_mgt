@@ -1,6 +1,8 @@
 class StringConst{
 
   static const String dashboardScreenText= 'Home Screen';
+  static const String updatePatientScreen = "Update Patient";
+
   static const String buttonText= 'Add';
   static const String labelText1= 'Id';
   static const String labelText2= 'Name';

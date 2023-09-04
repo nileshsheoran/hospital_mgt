@@ -19,7 +19,7 @@ Map<String, WidgetBuilder> routeMap = {
 class ScreenName {
   static const String addDoctorScreen = "AddDoctorScreen";
 
-  static const String addPatientScreen = "Add Patient";
-  static const String showPatientScreen = 'Show Patient';
+  static const String addPatientScreen = "Add Patient Detail";
+  static const String showPatientScreen = "Show Patient Detail";
 
 }

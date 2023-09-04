@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:hospital_mgt/database/database_helper.dart';
 import 'package:hospital_mgt/patient/model/patient_model.dart';
+import 'package:hospital_mgt/shared/string_const.dart';
 
 class UpdatePatientScreen extends StatefulWidget {
   const UpdatePatientScreen({required this.patient, super.key});
@@ -24,12 +24,11 @@ class _UpdatePatientScreenState extends State<UpdatePatientScreen> {
   void initState() {
     Patient patient = widget.patient;
 
-    idController =
-        TextEditingController(text: patient.id.toString());
+    idController = TextEditingController(text: patient.id.toString());
     nameController = TextEditingController(text: patient.name);
-    diseaseController= TextEditingController(text: patient.disease);
-    feesController= TextEditingController(text: patient.fees.toString());
-    doctorController= TextEditingController(text: patient.doctor);
+    diseaseController = TextEditingController(text: patient.disease);
+    feesController = TextEditingController(text: patient.fees.toString());
+    doctorController = TextEditingController(text: patient.doctor);
     addressController = TextEditingController(text: patient.address);
 
     super.initState();
@@ -39,7 +38,12 @@ class _UpdatePatientScreenState extends State<UpdatePatientScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Patient'),
+        title: const Text(
+          StringConst.updatePatientScreen,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -51,11 +55,10 @@ class _UpdatePatientScreenState extends State<UpdatePatientScreen> {
                 keyboardType: TextInputType.number,
                 enabled: false,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                    labelText: 'Id'
-                ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    labelText: 'Id'),
               ),
               const SizedBox(
                 height: 16,
@@ -134,7 +137,7 @@ class _UpdatePatientScreenState extends State<UpdatePatientScreen> {
                       address: addressController.text,
                     );
                     await DatabaseHelper.updatePatient(patient);
-                    if(mounted) {
+                    if (mounted) {
                       Navigator.pop(context);
                     }
                   },
