@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_mgt/database/database_helper.dart';
 import 'package:hospital_mgt/patient/model/patient_model.dart';
-import 'package:hospital_mgt/shared/route_map.dart';
 import 'package:hospital_mgt/shared/string_const.dart';
 
-class AddPatientScreen extends StatefulWidget {
-  const AddPatientScreen({super.key});
+class UpdatePatientScreen extends StatefulWidget {
+  const UpdatePatientScreen({required this.patient, super.key});
+
+  final Patient patient;
 
   @override
-  State<AddPatientScreen> createState() => _AddPatientScreenState();
+  State<UpdatePatientScreen> createState() => _UpdatePatientScreenState();
 }
 
-class _AddPatientScreenState extends State<AddPatientScreen> {
+class _UpdatePatientScreenState extends State<UpdatePatientScreen> {
   late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController diseaseController;
@@ -21,12 +22,15 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
 
   @override
   void initState() {
-    idController = TextEditingController();
-    nameController = TextEditingController();
-    diseaseController = TextEditingController();
-    feesController = TextEditingController();
-    doctorController = TextEditingController();
-    addressController = TextEditingController();
+    Patient patient = widget.patient;
+
+    idController = TextEditingController(text: patient.id.toString());
+    nameController = TextEditingController(text: patient.name);
+    diseaseController = TextEditingController(text: patient.disease);
+    feesController = TextEditingController(text: patient.fees.toString());
+    doctorController = TextEditingController(text: patient.doctor);
+    addressController = TextEditingController(text: patient.address);
+
     super.initState();
   }
 
@@ -34,7 +38,12 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ScreenName.addPatientScreen),
+        title: const Text(
+          StringConst.updatePatientScreen,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -42,25 +51,26 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
           child: Column(
             children: [
               TextField(
-                keyboardType: TextInputType.number,
                 controller: idController,
+                keyboardType: TextInputType.number,
+                enabled: false,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  labelText: StringConst.labelText1,
-                ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    labelText: 'Id'),
               ),
               const SizedBox(
                 height: 16,
               ),
               TextField(
+                keyboardType: TextInputType.number,
                 controller: nameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  labelText: StringConst.labelText2,
+                  labelText: 'Name',
                 ),
               ),
               const SizedBox(
@@ -72,20 +82,19 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  labelText: StringConst.labelText3,
+                  labelText: 'Disease',
                 ),
               ),
               const SizedBox(
                 height: 16,
               ),
               TextField(
-                keyboardType: TextInputType.number,
                 controller: feesController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  labelText: StringConst.labelText4,
+                  labelText: 'Fees',
                 ),
               ),
               const SizedBox(
@@ -97,7 +106,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  labelText: StringConst.labelText5,
+                  labelText: 'Doctor',
                 ),
               ),
               const SizedBox(
@@ -109,7 +118,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  labelText: StringConst.labelText6,
+                  labelText: 'Address',
                 ),
               ),
               const SizedBox(
@@ -127,15 +136,14 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                       doctor: doctorController.text,
                       address: addressController.text,
                     );
-                    await DatabaseHelper.addPatientData(patient);
+                    await DatabaseHelper.updatePatient(patient);
                     if (mounted) {
                       Navigator.pop(context);
                     }
-                    allClear();
                   },
                   child: const Text(
-                    StringConst.buttonText,
-                    style: TextStyle(fontSize: 16),
+                    'Update',
+                    style: TextStyle(fontSize: 24),
                   ),
                 ),
               ),
@@ -144,14 +152,5 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
         ),
       ),
     );
-  }
-
-  void allClear() {
-    idController.clear();
-    nameController.clear();
-    diseaseController.clear();
-    feesController.clear();
-    doctorController.clear();
-    addressController.clear();
   }
 }

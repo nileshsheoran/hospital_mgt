@@ -1,3 +1,4 @@
+import 'package:hospital_mgt/patient/model/patient_model.dart';
 import 'package:hospital_mgt/doctor/model/doctor_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -41,6 +42,20 @@ class DatabaseHelper {
 
   }
 
+  static Future addPatientData(Patient patient) async {
+    await database.rawInsert(
+      'insert into $patientTable values(?,?,?,?,?,?)',
+      [
+        patient.id,
+        patient.name,
+        patient.disease,
+        patient.fees,
+        patient.doctor,
+        patient.address
+      ],
+    );
+    print('Data inserted successfully');
+  }
   static Future addDoctor(Doctor doctorModel) async {
     await database.rawInsert("insert into $doctorTable values(?,?,?,?,?,?)", [
       doctorModel.id,
@@ -86,6 +101,9 @@ class DatabaseHelper {
 
 
 
+  static Future<List<Patient>> getPatientData() async {
+    List<Map<String, dynamic>> mapList =
+        await database.rawQuery('select * from $patientTable');
   static Future addCategory(Category categoryModel) async {
     await database.rawInsert("insert into $categoryTable values(?,?)", [
       categoryModel.id,
@@ -96,6 +114,33 @@ class DatabaseHelper {
     List<Map<String, dynamic>> mapList =
     await database.rawQuery("select * from $categoryTable");
 
+    List<Patient> patList = [];
+    for (int i = 0; i < mapList.length; i++) {
+      Map<String, dynamic> map = mapList[i];
+      Patient patientData = Patient.fromMap(map);
+      patList.add(patientData);
+    }
+    return patList;
+  }
+
+  static Future deletePatient(int idNo) async {
+    await database.rawDelete("delete from $patientTable where $id = $idNo");
+    print("delete patient successfully");
+  }
+
+  static Future updatePatient(Patient patient) async {
+    await database.rawUpdate(
+        "update $patientTable set $name=?,$disease=?,$fees=?,$doctor=?,$address=? where $id=?",
+        [
+          patient.name,
+          patient.disease,
+          patient.fees,
+          patient.doctor,
+          patient.address,
+          patient.id,
+        ]);
+    print("update patient successfully");
+  }
     List<Category> categoryList = [];
     for (int i = 0; i < mapList.length; i++) {
       Map<String, dynamic> map = mapList[i];
