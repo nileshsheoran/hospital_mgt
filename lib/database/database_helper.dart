@@ -1,5 +1,5 @@
-import 'package:hospital_mgt/patient/model/patient_model.dart';
 import 'package:hospital_mgt/doctor/model/doctor_model.dart';
+import 'package:hospital_mgt/patient/model/patient_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -42,20 +42,6 @@ class DatabaseHelper {
 
   }
 
-  static Future addPatientData(Patient patient) async {
-    await database.rawInsert(
-      'insert into $patientTable values(?,?,?,?,?,?)',
-      [
-        patient.id,
-        patient.name,
-        patient.disease,
-        patient.fees,
-        patient.doctor,
-        patient.address
-      ],
-    );
-    print('Data inserted successfully');
-  }
   static Future addDoctor(Doctor doctorModel) async {
     await database.rawInsert("insert into $doctorTable values(?,?,?,?,?,?)", [
       doctorModel.id,
@@ -99,21 +85,24 @@ class DatabaseHelper {
     print('Update Doctor Successfully');
   }
 
-
+  static Future addPatientData(Patient patient) async {
+    await database.rawInsert(
+      'insert into $patientTable values(?,?,?,?,?,?)',
+      [
+        patient.id,
+        patient.name,
+        patient.disease,
+        patient.fees,
+        patient.doctor,
+        patient.address
+      ],
+    );
+    print('Data inserted successfully');
+  }
 
   static Future<List<Patient>> getPatientData() async {
     List<Map<String, dynamic>> mapList =
         await database.rawQuery('select * from $patientTable');
-  static Future addCategory(Category categoryModel) async {
-    await database.rawInsert("insert into $categoryTable values(?,?)", [
-      categoryModel.id,
-      categoryModel.category,
-    ]);
-  }
-  static Future<List<Category>> getCategoryData() async {
-    List<Map<String, dynamic>> mapList =
-    await database.rawQuery("select * from $categoryTable");
-
     List<Patient> patList = [];
     for (int i = 0; i < mapList.length; i++) {
       Map<String, dynamic> map = mapList[i];
@@ -121,6 +110,25 @@ class DatabaseHelper {
       patList.add(patientData);
     }
     return patList;
+  }
+
+  static Future<List<Category>> getCategoryData() async {
+    List<Map<String, dynamic>> mapList =
+        await database.rawQuery("select * from $categoryTable");
+    List<Category> categoryList = [];
+    for (int i = 0; i < mapList.length; i++) {
+      Map<String, dynamic> map = mapList[i];
+      Category categoryModel = Category.fromMap(map);
+      categoryList.add(categoryModel);
+    }
+    return categoryList;
+  }
+
+  static Future addCategory(Category categoryModel) async {
+    await database.rawInsert("insert into $categoryTable values(?,?)", [
+      categoryModel.id,
+      categoryModel.category,
+    ]);
   }
 
   static Future deletePatient(int idNo) async {
@@ -141,18 +149,12 @@ class DatabaseHelper {
         ]);
     print("update patient successfully");
   }
-    List<Category> categoryList = [];
-    for (int i = 0; i < mapList.length; i++) {
-      Map<String, dynamic> map = mapList[i];
-      Category categoryModel = Category.fromMap(map);
-      categoryList.add(categoryModel);
-    }
-    return categoryList;
-  }
+
   static Future deleteCategory(int idno) async {
     await database.rawDelete("delete from $categoryTable where $id=$idno");
     print('Delete successfully');
   }
+
   static Future updateCategory(Category categoryModel) async {
     await database.rawUpdate(
         "update $categoryTable set $category=? where $id1=?",
